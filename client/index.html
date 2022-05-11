@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		
+		
+	</style>
+</head>
+<body>
+	<h1>hi</h1>
+	
+<input class="a1" placeholder="scriptName" type="text">
+<input class="c1" placeholder="stoploss" type="text">
+<input class="d1" placeholder="target" type="text">
+<input class="f1" placeholder="quantity" type="text">
+<input class="e1" type="submit">
+	
+
+	<script>
+
+	console.log('hii')
+
+let a1 = document.querySelector('.a1');
+
+let c1 = document.querySelector('.c1');
+let d1 = document.querySelector('.d1');
+let e1 = document.querySelector('.e1');
+let f1 = document.querySelector('.f1');
+e1.addEventListener('click',function () {
+	console.log(a1.value)
+
+
+
+
+fetch("http://localhost:3000/currentlong", {
+	
+	// Adding method type
+	method: "POST",
+	
+	// Adding body or contents to send
+	body: JSON.stringify({
+		scriptName: a1.value,
+		stoploss:c1.value,
+		target:d1.value,
+		quantity:f1.value
+		
+	}),
+	
+	// Adding headers to the request
+	headers: {
+		"Content-type": "application/json; charset=UTF-8"
+	}
+})
+
+// Converting to JSON
+.then(response => {return response.json()})
+
+// Displaying results to console
+.then(json => {console.log(json)});
+
+
+})
+
+	</script>
+</body>
+</html>
