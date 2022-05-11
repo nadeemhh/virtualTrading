@@ -14,6 +14,8 @@ const { JSDOM } = jsdom;
 const axios = require('axios');
 const { json } = require('express/lib/response');
 
+const port = process.env.PORT || 3000
+
 mongoose.connect('mongodb+srv://virtual-trading:hkiyygh68tfgcfhs586@cluster0.ohx5a.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
 
 const Shareprice = mongoose.model('shareprice', {
@@ -32,6 +34,9 @@ const Shareprice = mongoose.model('shareprice', {
             }
 
 })
+
+
+    
 
 setInterval(() => {
     let scriptNames = ['reliance-industries','cipla','state-bank-of-india','infosys','bajaj-finance'];
@@ -71,4 +76,4 @@ setInterval(() => {
     
 }, 10000)
 
-app.listen(3000)
+app.listen(port)
