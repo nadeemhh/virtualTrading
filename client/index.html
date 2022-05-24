@@ -48,7 +48,7 @@ e1.addEventListener('click',function () {
 
 
 
-fetch("https://virtualtrading66.herokuapp.com/currentlong", {
+fetch("http://localhost:3000/currentlong", {
 	
 	// Adding method type
 	method: "POST",
@@ -78,7 +78,7 @@ fetch("https://virtualtrading66.herokuapp.com/currentlong", {
 })
 
 
-fetch("https://virtualtrading66.herokuapp.com/show")
+fetch("http://localhost:3000/show")
 
 .then(response => {return response.json()})
 
@@ -120,52 +120,67 @@ if(data.loss[i].stoploss == data.loss[ii].stoploss && data.loss[i].pl == data.lo
 	console.log(data.loss)
 	console.log(data.profit)
 	console.log(data.currentpositionlong)
+//////////////set pl currentpositionlong
+for(let i = 0; i < data.currentpositionlong.length; i++){
+	
+	fetch(`https://virtualtrading66.herokuapp.com/getprices?scriptName=${data.currentpositionlong[i].scriptName}`)
 
+.then(response => {return response.json()})
+
+.then(pdata => {console.log(pdata,data.currentpositionlong[i].pl)
+	data.currentpositionlong[i].pl=pdata-data.currentpositionlong[i].buyprice
+	console.log(data.currentpositionlong[i])
+	
 	/////////////////////////////currentpositionlong
 	for(let i = 0; i < data.currentpositionlong.length; i++){
 
-	const h2 = document.querySelector(".currentpositionlong");
+const h2 = document.querySelector(".currentpositionlong");
 let html = `
 <div class="obj">
 <div style="display: flex;">
-	<h3>scriptName&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
-	<h3>${data.currentpositionlong[i].scriptName}</h3>
+<h3>scriptName&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
+<h3>${data.currentpositionlong[i].scriptName}</h3>
 </div>
 
 <div style="display: flex;">
-	<h3>buyprice&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
-	<h3>${data.currentpositionlong[i].buyprice}</h3>
+<h3>buyprice&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
+<h3>${data.currentpositionlong[i].buyprice}</h3>
 </div>
 
 <div style="display: flex;">
-	<h3>stoploss&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
-	<h3>${data.currentpositionlong[i].stoploss}</h3>
+<h3>stoploss&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
+<h3>${data.currentpositionlong[i].stoploss}</h3>
 </div>
 
 <div style="display: flex;">
-	<h3>quantity&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
-	<h3>${data.currentpositionlong[i].quantity}</h3>
+<h3>quantity&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
+<h3>${data.currentpositionlong[i].quantity}</h3>
 </div>
 
 <div style="display: flex;">
-	<h3>pl&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
-	<h3>${data.currentpositionlong[i].pl}</h3>
+<h3>pl&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
+<h3>${data.currentpositionlong[i].pl}</h3>
 </div>
 
 <div style="display: flex;">
-	<h3>date&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
-	<h3>${data.currentpositionlong[i].date}</h3>
+<h3>date&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
+<h3>${data.currentpositionlong[i].date}</h3>
 </div>
 
 <div style="display: flex;">
-	<h3>target&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
-	<h3>${data.currentpositionlong[i].target}</h3>
+<h3>target&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
+<h3>${data.currentpositionlong[i].target}</h3>
 </div>
 <h3>//////////////</h3>
 </div>`;
 h2.insertAdjacentHTML("beforeend", html);
 
-	}
+}
+
+
+})
+
+}
 
 	/////////////////////////////profit
 
