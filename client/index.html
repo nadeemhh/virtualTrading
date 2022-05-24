@@ -18,7 +18,19 @@
 <input class="d1" placeholder="target" type="text">
 <input class="f1" placeholder="quantity" type="text">
 <input class="e1" type="submit">
+
 	
+<div class="currentpositionlong" style="margin-top: 10px; background-color: rgb(177, 173, 173);height: 400px;overflow: scroll;">
+<h2>currentpositionlong</h2>
+</div>
+
+<div class="profit" style="margin-top: 10px;background-color: rgb(177, 173, 173);height: 400px;overflow: scroll;">
+	<h2>profit</h2>
+	</div>
+	
+	<div class="loss" style="margin-top: 10px;background-color: rgb(177, 173, 173);height: 400px;overflow: scroll;">
+		<h2>loss</h2>
+		</div>
 
 	<script>
 
@@ -64,6 +76,190 @@ fetch("http://localhost:3000/currentlong", {
 
 
 })
+
+
+fetch("http://localhost:3000/show")
+
+.then(response => {return response.json()})
+
+.then(data => {
+	
+let profit = [];
+	for(let i = 0; i < data.profit.length; i++){
+
+for(let ii = 0; ii < data.profit.length; ii++){
+if(i != ii){
+
+if(data.profit[i].stoploss == data.profit[ii].stoploss && data.profit[i].pl == data.profit[ii].pl){
+	//console.log(data.profit[i].pl ,'eq',data.profit[ii].pl,'s',data.profit[i].stoploss)
+	data.profit.splice(i,1)
+}
+}
+
+
+	}
+	}
+	//////////////////////////////////////////////////loss
+
+let loss = [];
+	for(let i = 0; i < data.loss.length; i++){
+
+for(let ii = 0; ii < data.loss.length; ii++){
+if(i != ii){
+
+if(data.loss[i].stoploss == data.loss[ii].stoploss && data.loss[i].pl == data.loss[ii].pl){
+	//console.log(data.loss[i].pl ,'eq',data.loss[ii].pl,'s',data.loss[i].stoploss)
+	data.loss.splice(i,1)
+}
+}
+
+
+	}
+	}
+	////////////////////////////////
+	console.log(data.loss)
+	console.log(data.profit)
+	console.log(data.currentpositionlong)
+
+	/////////////////////////////currentpositionlong
+	for(let i = 0; i < data.currentpositionlong.length; i++){
+
+	const h2 = document.querySelector(".currentpositionlong");
+let html = `
+<div class="obj">
+<div style="display: flex;">
+	<h3>scriptName&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
+	<h3>${data.currentpositionlong[i].scriptName}</h3>
+</div>
+
+<div style="display: flex;">
+	<h3>buyprice&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
+	<h3>${data.currentpositionlong[i].buyprice}</h3>
+</div>
+
+<div style="display: flex;">
+	<h3>stoploss&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
+	<h3>${data.currentpositionlong[i].stoploss}</h3>
+</div>
+
+<div style="display: flex;">
+	<h3>quantity&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
+	<h3>${data.currentpositionlong[i].quantity}</h3>
+</div>
+
+<div style="display: flex;">
+	<h3>pl&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
+	<h3>${data.currentpositionlong[i].pl}</h3>
+</div>
+
+<div style="display: flex;">
+	<h3>date&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
+	<h3>${data.currentpositionlong[i].date}</h3>
+</div>
+
+<div style="display: flex;">
+	<h3>target&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
+	<h3>${data.currentpositionlong[i].target}</h3>
+</div>
+<h3>//////////////</h3>
+</div>`;
+h2.insertAdjacentHTML("beforeend", html);
+
+	}
+
+	/////////////////////////////profit
+
+	for(let i = 0; i < data.profit.length; i++){
+
+const h2 = document.querySelector(".profit");
+let html = `
+<div class="obj">
+<div style="display: flex;">
+<h3>scriptName&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
+<h3>${data.profit[i].scriptName}</h3>
+</div>
+
+<div style="display: flex;">
+<h3>buyprice&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
+<h3>${data.profit[i].buyprice}</h3>
+</div>
+
+<div style="display: flex;">
+<h3>stoploss&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
+<h3>${data.profit[i].stoploss}</h3>
+</div>
+
+<div style="display: flex;">
+<h3>quantity&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
+<h3>${data.profit[i].quantity}</h3>
+</div>
+
+<div style="display: flex;">
+<h3>pl&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
+<h3>${data.profit[i].pl}</h3>
+</div>
+
+<div style="display: flex;">
+<h3>date&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
+<h3>${data.profit[i].date}</h3>
+</div>
+
+<div style="display: flex;">
+<h3>target&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
+<h3>${data.profit[i].target}</h3>
+</div>
+<h3>//////////////</h3>
+</div>`;
+h2.insertAdjacentHTML("beforeend", html);
+
+}
+	/////////////////////////////loss
+
+	for(let i = 0; i < data.loss.length; i++){
+
+const h2 = document.querySelector(".loss");
+let html = `
+<div class="obj">
+<div style="display: flex;">
+<h3>scriptName&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
+<h3>${data.loss[i].scriptName}</h3>
+</div>
+
+<div style="display: flex;">
+<h3>buyprice&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
+<h3>${data.loss[i].buyprice}</h3>
+</div>
+
+<div style="display: flex;">
+<h3>stoploss&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
+<h3>${data.loss[i].stoploss}</h3>
+</div>
+
+<div style="display: flex;">
+<h3>quantity&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
+<h3>${data.loss[i].quantity}</h3>
+</div>
+
+<div style="display: flex;">
+<h3>pl&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
+<h3>${data.loss[i].pl}</h3>
+</div>
+
+<div style="display: flex;">
+<h3>date&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
+<h3>${data.loss[i].date}</h3>
+</div>
+
+<div style="display: flex;">
+<h3>target&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
+<h3>${data.loss[i].target}</h3>
+</div>
+<h3>//////////////</h3>
+</div>`;
+h2.insertAdjacentHTML("beforeend", html);
+
+}
+});
 
 	</script>
 </body>
