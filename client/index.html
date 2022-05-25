@@ -11,23 +11,25 @@
 	</style>
 </head>
 <body>
-	<h1>hi</h1>
+	<h1 style="color: rgb(31, 106, 109);text-align: center;">create position</h1>
 	
+	<div style="display: flex;flex-direction: column;justify-content: center;align-items: center;gap: 2px;">
 <input class="a1" placeholder="scriptName" type="text">
 <input class="c1" placeholder="stoploss" type="text">
 <input class="d1" placeholder="target" type="text">
 <input class="f1" placeholder="quantity" type="text">
 <input class="e1" type="submit">
+</div>
 
-<h2 style="margin-top: 10px;">currentpositionlong</h2>
+<h2 style="margin-top: 10px;text-align: center; background-color: rgb(139, 139, 223);">current position long</h2>
 <div class="currentpositionlong" style="margin-top: 10px;height: 400px;overflow: scroll;">
 
 </div>
-<h2 style="margin-top: 10px;">profit</h2>
+<h2 style="margin-top: 10px;text-align: center; background-color: rgb(139, 139, 223);">profit</h2>
 <div class="profit" style="margin-top: 10px;height: 400px;overflow: scroll;">
 	
 	</div>
-	<h2 style="margin-top: 10px;">loss</h2>
+	<h2 style="margin-top: 10px;text-align: center; background-color: rgb(139, 139, 223);">loss</h2>
 	<div class="loss" style="margin-top: 10px;height: 400px;overflow: scroll;">
 
 		</div>
@@ -141,7 +143,7 @@ let rand =Math.floor(Math.random() * 100);
 
 const h2 = document.querySelector(".currentpositionlong");
 let html = `
-<div class="obj" style="border-style: groove; border-color: blue; margin-bottom: 4px;border-radius: 20px;padding-left: 2px;" >
+<div class="obj" style="border-style: groove; border-color: cadetblue; margin-bottom: 4px;border-radius: 20px;padding-left: 2px;" >
 <div style="display: flex;">
 <h3>scriptName&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
 <h3>${data.currentpositionlong[i].scriptName}</h3>
@@ -201,7 +203,7 @@ else{
 		let rand2 =Math.floor(Math.random() * 100);
 const h2 = document.querySelector(".profit");
 let html = `
-<div class="obj" style="border-style: groove; border-color: blue; margin-bottom: 4px;border-radius: 20px;padding-left: 2px;" >
+<div class="obj" style="border-style: groove; border-color: cadetblue; margin-bottom: 4px;border-radius: 20px;padding-left: 2px;" >
 <div style="display: flex;">
 <h3>scriptName&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
 <h3>${data.profit[i].scriptName}</h3>
@@ -256,7 +258,7 @@ else{
 		let rand3 =Math.floor(Math.random() * 100);
 const h2 = document.querySelector(".loss");
 let html = `
-<div class="obj" style="border-style: groove; border-color: blue; margin-bottom: 4px;border-radius: 20px;padding-left: 2px;" >
+<div class="obj" style="border-style: groove; border-color: cadetblue; margin-bottom: 4px;border-radius: 20px;padding-left: 2px;" >
 <div style="display: flex;">
 <h3>scriptName&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
 <h3>${data.loss[i].scriptName}</h3>
