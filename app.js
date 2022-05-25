@@ -191,7 +191,7 @@ const User = mongoose.model('user', {
     let scriptNames = ['reliance-industries','cipla','state-bank-of-india','infosys','bajaj-finance'];
    setInterval(() => {
     for(let i = 0; i < scriptNames.length; i++){
-    
+
     
      axios.get(`https://in.investing.com/equities/${scriptNames[i]}`,{
        headers: {
