@@ -47,7 +47,7 @@ e1.addEventListener('click',function () {
 
 
 
-fetch("http://localhost:3000/currentlong", {
+fetch("https://virtualtrading66.herokuapp.com/currentlong", {
 	
 	// Adding method type
 	method: "POST",
@@ -77,7 +77,7 @@ fetch("http://localhost:3000/currentlong", {
 })
 
 
-fetch("http://localhost:3000/show")
+fetch("https://virtualtrading66.herokuapp.com/show")
 
 .then(response => {return response.json()})
 
@@ -122,7 +122,7 @@ if(data.loss[i].stoploss == data.loss[ii].stoploss && data.loss[i].pl == data.lo
 //////////////set pl currentpositionlong
 for(let i = 0; i < data.currentpositionlong.length; i++){
 	
-	fetch(`http://localhost:3000/getprices?scriptName=${data.currentpositionlong[i].scriptName}`)
+	fetch(`https://virtualtrading66.herokuapp.com/getprices?scriptName=${data.currentpositionlong[i].scriptName}`)
 
 .then(response => {return response.json()})
 
