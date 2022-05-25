@@ -37,7 +37,6 @@
 	console.log('hii')
 
 let a1 = document.querySelector('.a1');
-
 let c1 = document.querySelector('.c1');
 let d1 = document.querySelector('.d1');
 let e1 = document.querySelector('.e1');
@@ -48,7 +47,7 @@ e1.addEventListener('click',function () {
 
 
 
-fetch("https://virtualtrading66.herokuapp.com/currentlong", {
+fetch("http://localhost:3000/currentlong", {
 	
 	// Adding method type
 	method: "POST",
@@ -78,7 +77,7 @@ fetch("https://virtualtrading66.herokuapp.com/currentlong", {
 })
 
 
-fetch("https://virtualtrading66.herokuapp.com/show")
+fetch("http://localhost:3000/show")
 
 .then(response => {return response.json()})
 
@@ -123,12 +122,12 @@ if(data.loss[i].stoploss == data.loss[ii].stoploss && data.loss[i].pl == data.lo
 //////////////set pl currentpositionlong
 for(let i = 0; i < data.currentpositionlong.length; i++){
 	
-	fetch(`https://virtualtrading66.herokuapp.com/getprices?scriptName=${data.currentpositionlong[i].scriptName}`)
+	fetch(`http://localhost:3000/getprices?scriptName=${data.currentpositionlong[i].scriptName}`)
 
 .then(response => {return response.json()})
 
 .then(pdata => {console.log(pdata,data.currentpositionlong[i].pl)
-	data.currentpositionlong[i].pl=pdata-data.currentpositionlong[i].buyprice
+	data.currentpositionlong[i].pl=(pdata-data.currentpositionlong[i].buyprice)*data.currentpositionlong[i].quantity;
 	console.log(data.currentpositionlong[i])
 	
 	/////////////////////////////currentpositionlong
