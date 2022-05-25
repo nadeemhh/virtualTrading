@@ -133,7 +133,8 @@ for(let i = 0; i < data.currentpositionlong.length; i++){
 
 .then(pdata => {
 	console.log('onee',onee++)
-let rand =Math.floor(Math.random() * 100);
+let rand =Math.floor(Math.random() * 100000)
+;
 
 	console.log(pdata,data.currentpositionlong[i].pl)
 	data.currentpositionlong[i].pl=(pdata-data.currentpositionlong[i].buyprice)*data.currentpositionlong[i].quantity;
@@ -206,7 +207,8 @@ else{
 	/////////////////////////////profit
 
 	for(let i = 0; i < data.profit.length; i++){
-		let rand2 =Math.floor(Math.random() * 100);
+		let rand2 =Math.floor(Math.random() * 100000)
+;
 const h2 = document.querySelector(".profit");
 let html = `
 <div class="obj" style="border-style: groove; border-color: cadetblue; margin-bottom: 4px;border-radius: 20px;padding-left: 2px;" >
@@ -261,7 +263,8 @@ else{
 	/////////////////////////////loss
 
 	for(let i = 0; i < data.loss.length; i++){
-		let rand3 =Math.floor(Math.random() * 100);
+		let rand3 =Math.floor(Math.random() * 100000)
+;
 const h2 = document.querySelector(".loss");
 let html = `
 <div class="obj" style="border-style: groove; border-color: cadetblue; margin-bottom: 4px;border-radius: 20px;padding-left: 2px;" >
