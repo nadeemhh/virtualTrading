@@ -71,12 +71,10 @@ fetch("https://virtualtrading66.herokuapp.com/currentlong", {
 .then(response => {return response.json()})
 
 // Displaying results to console
-.then(json => {console.log(json)});
+.then(json => {
+	console.log(json)
+	location.reload();});
 
-// a1,c1,d1,e1,f1.value='';
-// setTimeout(() => {
-// 	location.reload();
-// }, 1000);
 
 })
 
@@ -226,7 +224,7 @@ let html = `
 
 <div style="display: flex;">
 <h3>pl&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
-<h3>${data.profit[i].pl}</h3>
+<h3>${Math.round((data.profit[i].pl + Number.EPSILON) * 100) / 100}</h3>
 </div>
 
 <div style="display: flex;">
@@ -272,7 +270,7 @@ let html = `
 
 <div style="display: flex;">
 <h3>pl&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
-<h3>${data.loss[i].pl}</h3>
+<h3>${Math.round((data.loss[i].pl + Number.EPSILON) * 100) / 100}</h3>
 </div>
 
 <div style="display: flex;">
