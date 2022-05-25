@@ -155,18 +155,24 @@ let html = `
 </div>
 
 <div style="display: flex;">
-<h3>stoploss&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
-<h3>${data.currentpositionlong[i].stoploss}</h3>
-</div>
-
-<div style="display: flex;">
-<h3>quantity&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
-<h3>${data.currentpositionlong[i].quantity}</h3>
+<h3>price&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
+<h3>${pdata}</h3>
 </div>
 
 <div style="display: flex;">
 <h3>pl&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
 <h3 class="pl${rand}">${Math.round((data.currentpositionlong[i].pl + Number.EPSILON) * 100) / 100}</h3>
+</div>
+
+<div style="display: flex;">
+<h3>stoploss&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
+<h3>${data.currentpositionlong[i].stoploss}</h3>
+</div>
+
+
+<div style="display: flex;">
+<h3>quantity&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
+<h3>${data.currentpositionlong[i].quantity}</h3>
 </div>
 
 <div style="display: flex;">
