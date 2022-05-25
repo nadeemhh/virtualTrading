@@ -6,8 +6,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Document</title>
 	<style>
-		.green{background-color: green;}
-		.red{background-color: red;}
+		.green{background-color: green; padding: 5px;}
+		.red{background-color: red;padding: 5px;}
 	</style>
 </head>
 <body>
@@ -198,7 +198,7 @@ else{
 	/////////////////////////////profit
 
 	for(let i = 0; i < data.profit.length; i++){
-
+		let rand2 =Math.floor(Math.random() * 100);
 const h2 = document.querySelector(".profit");
 let html = `
 <div class="obj" style="border-style: groove; border-color: blue; margin-bottom: 4px;border-radius: 20px;padding-left: 2px;" >
@@ -224,7 +224,7 @@ let html = `
 
 <div style="display: flex;">
 <h3>pl&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
-<h3>${Math.round((data.profit[i].pl + Number.EPSILON) * 100) / 100}</h3>
+<h3 class="pl${rand2}">${data.profit[i].pl}</h3>
 </div>
 
 <div style="display: flex;">
@@ -240,11 +240,20 @@ let html = `
 </div>`;
 h2.insertAdjacentHTML("beforeend", html);
 
+if(data.currentpositionlong[i].pl < 0){
+	console.log('b')
+	document.querySelector(`.pl${rand2}`).classList.add("red");
+}
+
+else{
+	document.querySelector(`.pl${rand2}`).classList.add("green");
+}
+
 }
 	/////////////////////////////loss
 
 	for(let i = 0; i < data.loss.length; i++){
-
+		let rand3 =Math.floor(Math.random() * 100);
 const h2 = document.querySelector(".loss");
 let html = `
 <div class="obj" style="border-style: groove; border-color: blue; margin-bottom: 4px;border-radius: 20px;padding-left: 2px;" >
@@ -270,7 +279,7 @@ let html = `
 
 <div style="display: flex;">
 <h3>pl&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
-<h3>${Math.round((data.loss[i].pl + Number.EPSILON) * 100) / 100}</h3>
+<h3 class="pl${rand3}">${data.loss[i].pl}</h3>
 </div>
 
 <div style="display: flex;">
@@ -286,6 +295,14 @@ let html = `
 </div>`;
 h2.insertAdjacentHTML("beforeend", html);
 
+if(data.currentpositionlong[i].pl < 0){
+	console.log('b')
+	document.querySelector(`.pl${rand3}`).classList.add("red");
+}
+
+else{
+	document.querySelector(`.pl${rand3}`).classList.add("green");
+}
 }
 });
 
