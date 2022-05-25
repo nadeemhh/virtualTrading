@@ -242,7 +242,7 @@ let html = `
 </div>`;
 h2.insertAdjacentHTML("beforeend", html);
 
-if(data.currentpositionlong[i].pl < 0){
+if(data.profit[i].pl < 0){
 	console.log('b')
 	document.querySelector(`.pl${rand2}`).classList.add("red");
 }
@@ -297,7 +297,7 @@ let html = `
 </div>`;
 h2.insertAdjacentHTML("beforeend", html);
 
-if(data.currentpositionlong[i].pl < 0){
+if(data.loss[i].pl < 0){
 	console.log('b')
 	document.querySelector(`.pl${rand3}`).classList.add("red");
 }
@@ -305,6 +305,7 @@ if(data.currentpositionlong[i].pl < 0){
 else{
 	document.querySelector(`.pl${rand3}`).classList.add("green");
 }
+
 }
 });
 
