@@ -6,8 +6,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Document</title>
 	<style>
-		
-		
+		.green{background-color: green;}
+		.red{background-color: red;}
 	</style>
 </head>
 <body>
@@ -19,17 +19,17 @@
 <input class="f1" placeholder="quantity" type="text">
 <input class="e1" type="submit">
 
-	
-<div class="currentpositionlong" style="margin-top: 10px; background-color: rgb(177, 173, 173);height: 400px;overflow: scroll;">
-<h2>currentpositionlong</h2>
-</div>
+<h2 style="margin-top: 10px;">currentpositionlong</h2>
+<div class="currentpositionlong" style="margin-top: 10px;height: 400px;overflow: scroll;">
 
-<div class="profit" style="margin-top: 10px;background-color: rgb(177, 173, 173);height: 400px;overflow: scroll;">
-	<h2>profit</h2>
-	</div>
+</div>
+<h2 style="margin-top: 10px;">profit</h2>
+<div class="profit" style="margin-top: 10px;height: 400px;overflow: scroll;">
 	
-	<div class="loss" style="margin-top: 10px;background-color: rgb(177, 173, 173);height: 400px;overflow: scroll;">
-		<h2>loss</h2>
+	</div>
+	<h2 style="margin-top: 10px;">loss</h2>
+	<div class="loss" style="margin-top: 10px;height: 400px;overflow: scroll;">
+
 		</div>
 
 	<script>
@@ -73,9 +73,14 @@ fetch("https://virtualtrading66.herokuapp.com/currentlong", {
 // Displaying results to console
 .then(json => {console.log(json)});
 
+// a1,c1,d1,e1,f1.value='';
+// setTimeout(() => {
+// 	location.reload();
+// }, 1000);
 
 })
 
+//////////////////////////////////////////fetch 
 
 fetch("https://virtualtrading66.herokuapp.com/show")
 
@@ -121,12 +126,16 @@ if(data.loss[i].stoploss == data.loss[ii].stoploss && data.loss[i].pl == data.lo
 	console.log(data.currentpositionlong)
 //////////////set pl currentpositionlong
 for(let i = 0; i < data.currentpositionlong.length; i++){
-	
+	let onee =0;
 	fetch(`https://virtualtrading66.herokuapp.com/getprices?scriptName=${data.currentpositionlong[i].scriptName}`)
 
 .then(response => {return response.json()})
 
-.then(pdata => {console.log(pdata,data.currentpositionlong[i].pl)
+.then(pdata => {
+	console.log('onee',onee++)
+let rand =Math.floor(Math.random() * 100);
+
+	console.log(pdata,data.currentpositionlong[i].pl)
 	data.currentpositionlong[i].pl=(pdata-data.currentpositionlong[i].buyprice)*data.currentpositionlong[i].quantity;
 	console.log(data.currentpositionlong[i])
 	
@@ -134,7 +143,7 @@ for(let i = 0; i < data.currentpositionlong.length; i++){
 
 const h2 = document.querySelector(".currentpositionlong");
 let html = `
-<div class="obj">
+<div class="obj" style="border-style: groove; border-color: blue; margin-bottom: 4px;border-radius: 20px;padding-left: 2px;" >
 <div style="display: flex;">
 <h3>scriptName&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
 <h3>${data.currentpositionlong[i].scriptName}</h3>
@@ -157,7 +166,7 @@ let html = `
 
 <div style="display: flex;">
 <h3>pl&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
-<h3>${data.currentpositionlong[i].pl}</h3>
+<h3 class="pl${rand}">${Math.round((data.currentpositionlong[i].pl + Number.EPSILON) * 100) / 100}</h3>
 </div>
 
 <div style="display: flex;">
@@ -169,12 +178,20 @@ let html = `
 <h3>target&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
 <h3>${data.currentpositionlong[i].target}</h3>
 </div>
-<h3>//////////////</h3>
+
 </div>`;
 h2.insertAdjacentHTML("beforeend", html);
 
+console.log('data.currentpositionlong[i].pl',data.currentpositionlong[i].pl)
+console.log('c')
+if(data.currentpositionlong[i].pl < 0){
+	console.log('b')
+	document.querySelector(`.pl${rand}`).classList.add("red");
+}
 
-
+else{
+	document.querySelector(`.pl${rand}`).classList.add("green");
+}
 
 })
 
@@ -186,7 +203,7 @@ h2.insertAdjacentHTML("beforeend", html);
 
 const h2 = document.querySelector(".profit");
 let html = `
-<div class="obj">
+<div class="obj" style="border-style: groove; border-color: blue; margin-bottom: 4px;border-radius: 20px;padding-left: 2px;" >
 <div style="display: flex;">
 <h3>scriptName&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
 <h3>${data.profit[i].scriptName}</h3>
@@ -221,7 +238,7 @@ let html = `
 <h3>target&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
 <h3>${data.profit[i].target}</h3>
 </div>
-<h3>//////////////</h3>
+
 </div>`;
 h2.insertAdjacentHTML("beforeend", html);
 
@@ -232,7 +249,7 @@ h2.insertAdjacentHTML("beforeend", html);
 
 const h2 = document.querySelector(".loss");
 let html = `
-<div class="obj">
+<div class="obj" style="border-style: groove; border-color: blue; margin-bottom: 4px;border-radius: 20px;padding-left: 2px;" >
 <div style="display: flex;">
 <h3>scriptName&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
 <h3>${data.loss[i].scriptName}</h3>
@@ -267,7 +284,7 @@ let html = `
 <h3>target&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
 <h3>${data.loss[i].target}</h3>
 </div>
-<h3>//////////////</h3>
+
 </div>`;
 h2.insertAdjacentHTML("beforeend", html);
 

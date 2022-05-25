@@ -268,6 +268,7 @@ let time = new Date().getTime();
                           console.log(error);
                       } else {
                           console.log('pushed in currentpositionlong');
+                          res.send({'done':'done'})
                       }
                   });
 
@@ -276,7 +277,7 @@ let time = new Date().getTime();
     
     }) 
 
-///////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////true d///////////////////////////////////
 
 
 //////////////////////////////save in loss and profit ////////////////////////////////////////////
@@ -302,7 +303,7 @@ if(parseFloat(user.currentpositionlong[i].stoploss) >= parseFloat( price.prices[
         buyprice:user.currentpositionlong[i].buyprice,
         stoploss :user.currentpositionlong[i].stoploss,
         quantity:user.currentpositionlong[i].quantity,
-        pl:price.prices[ii].price-user.currentpositionlong[i].buyprice,
+        pl:(price.prices[ii].price - user.currentpositionlong[i].buyprice)*user.currentpositionlong[i].quantity,
         date:date,
         time:time,
         sellprice:price.prices[ii].price,
@@ -337,7 +338,7 @@ if(parseFloat( price.prices[ii].price) >= parseFloat(user.currentpositionlong[i]
       buyprice:user.currentpositionlong[i].buyprice,
       stoploss :user.currentpositionlong[i].stoploss,
       quantity:user.currentpositionlong[i].quantity,
-      pl:price.prices[ii].price - user.currentpositionlong[i].buyprice,
+      pl:(price.prices[ii].price - user.currentpositionlong[i].buyprice)*user.currentpositionlong[i].quantity,
       date:date,
       time:time,
       sellprice:price.prices[ii].price,
