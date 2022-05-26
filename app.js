@@ -236,7 +236,7 @@ setInterval(() => {
     });
     
 
- }, 5000)
+ }, 10000)
 // //////////////////////////////////////////////////////////////////////////////
 
 // //////////////////////////////save in currentpositionlong /////////////////////////////
@@ -400,18 +400,30 @@ app.get('/getprices', async (req, res) => {
               if (error) {
                   console.log(error);
               } else {
-                  console.log('all share',success[2].scriptName);
+                  console.log('all share',success[4].prices);
 
                   for(let i = 0; i < success.length; i++){
+                 let sname=success[i].scriptName;
+                    console.log('name',success[i].scriptName)               
+                    Shareprice.findOneAndDelete({scriptName:success[i].scriptName},
+        function (error, success) {
+              if (error) {
+                  console.log('error');
+              } else {
+                  console.log('deleted sh');
+                  const shareprice = new Shareprice({
+                    scriptName:sname
+                 })
+                 shareprice.save()
+              }
+          });
+          console.log(success.length,'i',i)
+                      if(i == success.length-1){
+                       console.log('45435gdcfbcvb577rnvnv86888888877678ujhbmnbnb83333333333344444445455545455645656565646456565656555555555555555555555555555565555')
+                       res.send({'deleted':'done'})
+                       
+                    }
 
-                    Shareprice.findOneAndUpdate({scriptName:success[i].scriptName}, {$pull: {prices: {script:success[i].scriptName}}},
-                    function (error, success) {
-                          if (error) {
-                              console.log(error);
-                          } else {
-                              console.log('success',success);
-                          }
-                      });
                 }
               }
           });
@@ -420,7 +432,7 @@ app.get('/getprices', async (req, res) => {
 
     })
 
-    
+  
 ///////////////////////////////////////////////////////////////////////////////////
 app.listen(port)
 
