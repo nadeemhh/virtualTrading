@@ -190,17 +190,6 @@ const User = mongoose.model('user', {
   let m_date = split_date[0];
   console.log(m_date)
 
-
-
-//   Shareprice.findOneAndDelete({scriptName:'AdaniPorts&SEZ '},
-//   function (error, success) {
-//         if (error) {
-//             console.log(error);
-//         } else {
-//             console.log('success',success);
-//         }
-//     });
-
 /////////////////////////////////save price////////////////////////////////////////////////////
 
 setInterval(() => {
