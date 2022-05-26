@@ -192,6 +192,15 @@ const User = mongoose.model('user', {
 
 
 
+//   Shareprice.findOneAndDelete({scriptName:'AdaniPorts&SEZ '},
+//   function (error, success) {
+//         if (error) {
+//             console.log(error);
+//         } else {
+//             console.log('success',success);
+//         }
+//     });
+
 /////////////////////////////////save price////////////////////////////////////////////////////
 
 setInterval(() => {
@@ -250,7 +259,7 @@ let time = new Date().getTime();
           if (error) {
               console.log(error);
           } else {
-              console.log('Shareprice');
+              console.log('Shareprice',success);
               let currentprice = success.prices[success.prices.length - 1].price;
 
               User.findOneAndUpdate({userName:'nadeem'}, {$push: {currentpositionlong: {scriptName:req.body.scriptName,	
@@ -387,7 +396,7 @@ app.get('/getprices', async (req, res) => {
     function (error, success) {
           if (error) {
               console.log(error);
-          } else {console.log('success',success.prices[success.prices.length-1].price)
+          } else {console.log('success',success)
          res.send(success.prices[success.prices.length-1].price)
         }})
     
