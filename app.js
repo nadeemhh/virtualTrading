@@ -212,7 +212,66 @@ setInterval(() => {
         
         console.log(dom.window.document.querySelectorAll('.u-clickable')[oo].children[3].textContent.replace('\n','').replace(' ','').replace(' ',''))
 
-        
+        let nam =dom.window.document.querySelectorAll('.u-clickable')[oo].children[2].textContent.replace('\n','').replace(' ','').replace(' ','').replace(' ','');
+        if(nam[0]=='O' && nam[1]=='i'&& nam[2]=='l'){
+            console.log('nammmmmmmmmmmmmmmmmmmmmmmmmmm',nam)
+            nam='OilandNaturalGas';
+            Shareprice.findOneAndUpdate({scriptName:nam}, {$push: {prices: [{price:dom.window.document.querySelectorAll('.u-clickable')[oo].children[3].textContent.replace('\n','').replace(' ','').replace(' ','').replace(',',''),
+            date:date,time:time,script:dom.window.document.querySelectorAll('.u-clickable')[oo].children[2].textContent.replace('\n','').replace(' ','').replace(' ','').replace(' ','')}]}},
+                function (error, success) {
+                      if (error) {
+                          console.log(error);
+                      } else {
+                          console.log('price saved');
+                      }
+                  });
+    
+        }
+
+        if(nam[5]=='P' && nam[6]=='o'&& nam[7]=='r'){
+            console.log('nammmmmmmmmmmmmmmmmmmmmmmmmmm',nam)
+            nam='AdaniPortsandSEZ';
+            Shareprice.findOneAndUpdate({scriptName:nam}, {$push: {prices: [{price:dom.window.document.querySelectorAll('.u-clickable')[oo].children[3].textContent.replace('\n','').replace(' ','').replace(' ','').replace(',',''),
+            date:date,time:time,script:dom.window.document.querySelectorAll('.u-clickable')[oo].children[2].textContent.replace('\n','').replace(' ','').replace(' ','').replace(' ','')}]}},
+                function (error, success) {
+                      if (error) {
+                          console.log(error);
+                      } else {
+                          console.log('price saved');
+                      }
+                  });
+    
+        }
+
+        if(nam[0]=='L' && nam[1]=='a'&& nam[2]=='r'){
+            console.log('nammmmmmmmmmmmmmmmmmmmmmmmmmm',nam)
+            nam='LarsenandToubro';
+            Shareprice.findOneAndUpdate({scriptName:nam}, {$push: {prices: [{price:dom.window.document.querySelectorAll('.u-clickable')[oo].children[3].textContent.replace('\n','').replace(' ','').replace(' ','').replace(',',''),
+            date:date,time:time,script:dom.window.document.querySelectorAll('.u-clickable')[oo].children[2].textContent.replace('\n','').replace(' ','').replace(' ','').replace(' ','')}]}},
+                function (error, success) {
+                      if (error) {
+                          console.log(error);
+                      } else {
+                          console.log('price saved');
+                      }
+                  });
+    
+        }
+
+        if(nam[2]=='h' && nam[3]=='i'&& nam[4]=='n'){
+            console.log('nammmmmmmmmmmmmmmmmmmmmmmmmmm',nam)
+            nam='MahindraandMahindra';
+            Shareprice.findOneAndUpdate({scriptName:nam}, {$push: {prices: [{price:dom.window.document.querySelectorAll('.u-clickable')[oo].children[3].textContent.replace('\n','').replace(' ','').replace(' ','').replace(',',''),
+            date:date,time:time,script:dom.window.document.querySelectorAll('.u-clickable')[oo].children[2].textContent.replace('\n','').replace(' ','').replace(' ','').replace(' ','')}]}},
+                function (error, success) {
+                      if (error) {
+                          console.log(error);
+                      } else {
+                          console.log('price saved');
+                      }
+                  });
+    
+        }
 
         Shareprice.findOneAndUpdate({scriptName:dom.window.document.querySelectorAll('.u-clickable')[oo].children[2].textContent.replace('\n','').replace(' ','').replace(' ','').replace(' ','')}, {$push: {prices: [{price:dom.window.document.querySelectorAll('.u-clickable')[oo].children[3].textContent.replace('\n','').replace(' ','').replace(' ','').replace(',',''),
         date:date,time:time,script:dom.window.document.querySelectorAll('.u-clickable')[oo].children[2].textContent.replace('\n','').replace(' ','').replace(' ','').replace(' ','')}]}},
