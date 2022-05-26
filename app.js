@@ -188,12 +188,9 @@ const User = mongoose.model('user', {
 
 /////////////////////////////////save price////////////////////////////////////////////////////
 
-    let scriptNames = ['reliance-industries','cipla','state-bank-of-india','infosys'];
-   setInterval(() => {
-    for(let i = 0; i < scriptNames.length; i++){
+  setInterval(() => {
 
-    
-     axios.get(`https://in.investing.com/equities/${scriptNames[i]}`,{
+     axios.get(`https://in.investing.com/indices/s-p-cnx-nifty-components`,{
        headers: {
     
            "user-agent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Mobile Safari/537.36"
@@ -202,43 +199,37 @@ const User = mongoose.model('user', {
     
     const dom = new JSDOM(respon.data);
     
-    let currentPrice = dom.window.document.querySelector('.js-streamable-element').textContent;
-    console.log(currentPrice)
     let date = new Date().toLocaleString();
     let time = new Date().getTime();
 
+    for(let oo = 0; oo < 50; oo++){
+
+        console.log(dom.window.document.querySelectorAll('.u-clickable')[oo].children[2].textContent.replace('\n','').replace(' ','').replace(' ',''))
+        
+        console.log(dom.window.document.querySelectorAll('.u-clickable')[oo].children[3].textContent.replace('\n','').replace(' ','').replace(' ',''))
+
+
+        Shareprice.findOneAndUpdate({scriptName:dom.window.document.querySelectorAll('.u-clickable')[oo].children[2].textContent.replace('\n','').replace(' ','').replace(' ','')}, {$push: {prices: [{price:dom.window.document.querySelectorAll('.u-clickable')[oo].children[3].textContent.replace('\n','').replace(' ','').replace(' ','').replace(',',''),
+        date:date,time:time}]}},
+            function (error, success) {
+                  if (error) {
+                      console.log(error);
+                  } else {
+                      console.log('price saved');
+                  }
+              });
+        }
     
-    Shareprice.findOneAndUpdate({scriptName:scriptNames[i]}, {$push: {prices: [{price:currentPrice.replace(',',''),
-    date:date,time:time}]}},
-        function (error, success) {
-              if (error) {
-                  console.log(error);
-              } else {
-                  console.log('price saved');
-              }
-          });
+  
     }).catch(function(err) {  
     
        console.log('failed to fetch price');  
     
     });
     
-    }
+
 }, 5000)
 //////////////////////////////////////////////////////////////////////////////
-    
-    // let date = new Date().toLocaleString();
-    // const pr = {scriptName:scriptNames[i],
-    //     price:currentPrice,
-    //     date:date}
-    //     console.log(pr)
-    // const user = new User({
-    //     userName:'ajay',
-    //     date:date
-    // })
-    // user.save()
-
-
 
 //////////////////////////////save in currentpositionlong /////////////////////////////
 
