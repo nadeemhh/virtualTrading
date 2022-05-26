@@ -22,7 +22,13 @@ const Shareprice = mongoose.model('shareprice', {
     type: String
        
     },
-    prices : [{price:{
+    prices : [{
+        script : {
+            type: String
+               
+            },
+        
+        price:{
         type: String
            
         },
@@ -188,7 +194,7 @@ const User = mongoose.model('user', {
 
 /////////////////////////////////save price////////////////////////////////////////////////////
 
-  setInterval(() => {
+setInterval(() => {
 
      axios.get(`https://in.investing.com/indices/s-p-cnx-nifty-components`,{
        headers: {
@@ -208,9 +214,10 @@ const User = mongoose.model('user', {
         
         console.log(dom.window.document.querySelectorAll('.u-clickable')[oo].children[3].textContent.replace('\n','').replace(' ','').replace(' ',''))
 
+        
 
-        Shareprice.findOneAndUpdate({scriptName:dom.window.document.querySelectorAll('.u-clickable')[oo].children[2].textContent.replace('\n','').replace(' ','').replace(' ','')}, {$push: {prices: [{price:dom.window.document.querySelectorAll('.u-clickable')[oo].children[3].textContent.replace('\n','').replace(' ','').replace(' ','').replace(',',''),
-        date:date,time:time}]}},
+        Shareprice.findOneAndUpdate({scriptName:dom.window.document.querySelectorAll('.u-clickable')[oo].children[2].textContent.replace('\n','').replace(' ','').replace(' ','').replace(' ','')}, {$push: {prices: [{price:dom.window.document.querySelectorAll('.u-clickable')[oo].children[3].textContent.replace('\n','').replace(' ','').replace(' ','').replace(',',''),
+        date:date,time:time,script:dom.window.document.querySelectorAll('.u-clickable')[oo].children[2].textContent.replace('\n','').replace(' ','').replace(' ','').replace(' ','')}]}},
             function (error, success) {
                   if (error) {
                       console.log(error);
@@ -218,6 +225,7 @@ const User = mongoose.model('user', {
                       console.log('price saved');
                   }
               });
+
         }
     
   
@@ -228,10 +236,10 @@ const User = mongoose.model('user', {
     });
     
 
-}, 5000)
-//////////////////////////////////////////////////////////////////////////////
+ }, 5000)
+// //////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////save in currentpositionlong /////////////////////////////
+// //////////////////////////////save in currentpositionlong /////////////////////////////
 
 app.post('/currentlong', async (req, res) => {
 let date = new Date().toLocaleString();
@@ -362,31 +370,7 @@ if(i == user.currentpositionlong.length - 1){
     res.send(JSON.stringify(userdata))
 }
 
-   /////////////remove price//////////////
-   if(i == user.currentpositionlong.length - 1){
-       console.log(i,'equal',user.currentpositionlong.length-1)
-       let price = await Shareprice.find({}).exec();
-       for(let o = 0; o < price.length; o++){
-
-        for(let oo = 0; oo < price[o].prices.length; oo++){
-            if(price[o].prices[oo].date.split(',')[0] != m_date){
-                     console.log(price[o].prices[oo].date.split(',')[0] ,'true date', m_date)
-                Shareprice.findOneAndUpdate({scriptName:price[o].scriptName}, {$pull: {prices: {date:price[o].prices[oo].date}}},
-        function (error, success) {
-              if (error) {
-                  console.log(error);
-              } else {
-                  console.log('removed old price');
-              }
-          });
-
-            }
-        }
-
-       }
-
-
-   }
+   
 }
 
 
@@ -409,7 +393,32 @@ app.get('/getprices', async (req, res) => {
     
     })
 
+    app.get('/remove', async (req, res) => {
 
+
+        Shareprice.find({},function (error, success) {
+              if (error) {
+                  console.log(error);
+              } else {
+                  console.log('all share',success[2].scriptName);
+
+                  for(let i = 0; i < success.length; i++){
+
+                    Shareprice.findOneAndUpdate({scriptName:success[i].scriptName}, {$pull: {prices: {script:success[i].scriptName}}},
+                    function (error, success) {
+                          if (error) {
+                              console.log(error);
+                          } else {
+                              console.log('success',success);
+                          }
+                      });
+                }
+              }
+          });
+
+          console.log('removed')
+
+    })
 
     
 ///////////////////////////////////////////////////////////////////////////////////
