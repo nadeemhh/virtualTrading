@@ -188,7 +188,7 @@ const User = mongoose.model('user', {
 
 /////////////////////////////////save price////////////////////////////////////////////////////
 
-    let scriptNames = ['reliance-industries','cipla','state-bank-of-india','infosys','bajaj-finance'];
+    let scriptNames = ['reliance-industries','cipla','state-bank-of-india','infosys','bajaj-finance','ntpc','hdfc-standard-life','bharti-airtel','britannia-industries','oil---natural-gas-corporation','housing-development-finance','nestle','kotak-mahindra-bank','icici-bank-ltd','tata-global-beverages','hdfc-bank-ltd','itc','bajaj-finserv-limited','sun-pharma-advanced-research','bajaj-auto','axis-bank','maruti-suzuki-india','indusind-bank','hindustan-unilever','dr-reddys-laboratories','tata-steel','power-grid-corp.-of-india','coal-india','hindalco-industries','ultratech-cement','titan-industries','eicher-motors','hero-motocorp','bharat-petroleum','hcl-technologies','mahindra---mahindra','grasim-industries','tata-motors-ltd','jsw-steel','shree-cements','apollo-hospitals','wipro-ltd','larsen---toubro','tata-consultancy-services','tech-mahindra','united-phosphorus','divis-laboratories','mundra-port-special-eco.-zone','asian-paints'];
    setInterval(() => {
     for(let i = 0; i < scriptNames.length; i++){
 
@@ -423,3 +423,4 @@ app.get('/getprices', async (req, res) => {
     
 ///////////////////////////////////////////////////////////////////////////////////
 app.listen(port)
+
