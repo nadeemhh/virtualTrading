@@ -198,7 +198,7 @@ const User = mongoose.model('user', {
 
 /////////////////////////////////save price////////////////////////////////////////////////////
 
-//setInterval(() => {
+setInterval(() => {
 
      axios.get(`https://in.investing.com/indices/s-p-cnx-nifty-components`,{
        headers: {
@@ -299,7 +299,7 @@ const User = mongoose.model('user', {
     });
     
 
- //}, 5000)
+ }, 10000)
 // //////////////////////////////////////////////////////////////////////////////
 
 // //////////////////////////////save in currentpositionlong /////////////////////////////
