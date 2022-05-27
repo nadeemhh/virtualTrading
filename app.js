@@ -18,31 +18,36 @@ const port = process.env.PORT || 3000
 mongoose.connect('mongodb+srv://virtual-trading:hkiyygh68tfgcfhs586@cluster0.ohx5a.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
 
 const Shareprice = mongoose.model('shareprice', {
-  scriptName : {
-    type: String
-       
-    },
-    prices : [{
-        script : {
-            type: String
-               
-            },
-        
-        price:{
-        type: String
-           
-        },
- 
-        date:{
-            type: String
-               
-            },
-            
-            time:{
-                type: String
-            }}]
-
-})
+    scriptName : {
+      type: String
+         
+      },
+      prices : [{
+          script : {
+              type: String
+                 
+              },
+          
+          price:{
+          type: String
+             
+          },
+   
+          date:{
+              type: String
+                 
+              },
+              
+              time:{
+                  type: String
+              },
+              counter:{
+                  type: String
+                     
+                  },
+          }]
+  
+  })
 
 
 const User = mongoose.model('user', {
@@ -192,7 +197,7 @@ const User = mongoose.model('user', {
 
 /////////////////////////////////save price////////////////////////////////////////////////////
 
-setInterval(() => {
+//setInterval(() => {
 
      axios.get(`https://in.investing.com/indices/s-p-cnx-nifty-components`,{
        headers: {
@@ -293,7 +298,7 @@ setInterval(() => {
     });
     
 
- }, 10000)
+ //}, 10000)
 // //////////////////////////////////////////////////////////////////////////////
 
 // //////////////////////////////save in currentpositionlong /////////////////////////////
@@ -339,14 +344,66 @@ let time = new Date().getTime();
 //////////////////////////////save in loss and profit ////////////////////////////////////////////
 
 app.get('/show', async (req, res) => {
-    
-    let user = await User.findOne({ userName: 'nadeem' }).exec();
-
-      
+    console.log('hii')
+    let user = await User.findOne({ userName: 'nadeem' }).exec();      
    
    for(let i = 0; i < user.currentpositionlong.length; i++){
+    console.log('hii2')
     let price = await Shareprice.findOne({ scriptName : user.currentpositionlong[i].scriptName }).exec();
     for(let ii = 0; ii < price.prices.length; ii++){
+        console.log('hii3')
+        console.log('8888888');
+        if(i == user.currentpositionlong.length - 1){
+            
+                let userdata = await User.findOne({ userName: 'nadeem' }).exec();
+                console.log('userdata',userdata)
+                res.send(JSON.stringify(userdata))
+           
+            
+            console.log('999999999999999999');
+            setTimeout(() => {
+                console.log('100000000000000000000');
+Shareprice.find({},function (error, success) {
+    if (error) {
+        console.log(error);
+    } else {
+        console.log('all share',success[4].prices);
+
+        for(let i = 0; i < success.length; i++){
+       let sname=success[i].scriptName;
+          console.log('name',success[i].scriptName)     
+          
+          if(success[i].prices.length > 500){
+          Shareprice.findOneAndDelete({scriptName:success[i].scriptName},
+function (error, success) {
+    if (error) {
+        console.log('error');
+    } else {
+        console.log('deleted sh');
+        const shareprice = new Shareprice({
+          scriptName:sname
+       })
+       shareprice.save()
+    }
+})};
+
+console.log(success.length,'i',i)
+            if(i == success.length-1){
+             console.log('45435gdcfbcvb577rnvnv86888888877678ujhbmnbnb83333333333344444445455545455645656565646456565656555555555555555555555555555565555')
+            
+             
+          }
+
+      }
+    }
+});
+
+                console.log('done,delete price')
+            }, 60000);
+            
+        }
+        
+
 
 /////////////cheack for loss/////////
 //console.log(parseFloat( price.prices[ii].time) ,'time', parseFloat(user.currentpositionlong[i].time))
@@ -382,6 +439,8 @@ if(parseFloat(user.currentpositionlong[i].stoploss) >= parseFloat( price.prices[
                            
                         }
                     });
+
+                    ///
               }
           });
 
@@ -394,7 +453,7 @@ if(parseFloat( price.prices[ii].price) >= parseFloat(user.currentpositionlong[i]
             
     let date = price.prices[ii].date;
     let time =price.prices[ii].time;
-    
+
     User.findOneAndUpdate({userName:'nadeem'}, {$push: {profit: {scriptName:user.currentpositionlong[i].scriptName,	
       buyprice:user.currentpositionlong[i].buyprice,
       stoploss :user.currentpositionlong[i].stoploss,
@@ -426,11 +485,6 @@ if(parseFloat( price.prices[ii].price) >= parseFloat(user.currentpositionlong[i]
 }}
    }
 ///////////////send data///////
-if(i == user.currentpositionlong.length - 1){
-    let userdata = await User.findOne({ userName: 'nadeem' }).exec();
-    console.log('userdata',userdata)
-    res.send(JSON.stringify(userdata))
-}
 
    
 }
@@ -455,46 +509,49 @@ app.get('/getprices', async (req, res) => {
     
     })
 
-    app.get('/remove', async (req, res) => {
 
+        
+        // Shareprice.find({},function (error, success) {
+        //       if (error) {
+        //           console.log(error);
+        //       } else {
+        //           console.log('all share',success[4].prices);
 
-        Shareprice.find({},function (error, success) {
-              if (error) {
-                  console.log(error);
-              } else {
-                  console.log('all share',success[4].prices);
+        //           for(let i = 0; i < success.length; i++){
+        //          let sname=success[i].scriptName;
+        //             console.log('name',success[i].scriptName)     
+                    
+        //             if(success[i].prices.length > 57){
+        //             Shareprice.findOneAndDelete({scriptName:success[i].scriptName},
+        // function (error, success) {
+        //       if (error) {
+        //           console.log('error');
+        //       } else {
+        //           console.log('deleted sh');
+        //           const shareprice = new Shareprice({
+        //             scriptName:sname
+        //          })
+        //          shareprice.save()
+        //       }
+        //   })};
 
-                  for(let i = 0; i < success.length; i++){
-                 let sname=success[i].scriptName;
-                    console.log('name',success[i].scriptName)               
-                    Shareprice.findOneAndDelete({scriptName:success[i].scriptName},
-        function (error, success) {
-              if (error) {
-                  console.log('error');
-              } else {
-                  console.log('deleted sh');
-                  const shareprice = new Shareprice({
-                    scriptName:sname
-                 })
-                 shareprice.save()
-              }
-          });
-          console.log(success.length,'i',i)
-                      if(i == success.length-1){
-                       console.log('45435gdcfbcvb577rnvnv86888888877678ujhbmnbnb83333333333344444445455545455645656565646456565656555555555555555555555555555565555')
-                       res.send({'deleted':'done'})
+        //   console.log(success.length,'i',i)
+        //               if(i == success.length-1){
+        //                console.log('45435gdcfbcvb577rnvnv86888888877678ujhbmnbnb83333333333344444445455545455645656565646456565656555555555555555555555555555565555')
+        //                res.send({'deleted':'done'})
                        
-                    }
+        //             }
 
-                }
-              }
-          });
+        //         }
+        //       }
+        //   });
+        
+       
+        
 
-          console.log('removed')
-
-    })
-
-  
 ///////////////////////////////////////////////////////////////////////////////////
 app.listen(port)
+
+
+   
 
