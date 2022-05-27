@@ -248,7 +248,7 @@ let html = `
 
 <div style="display: flex;">
 <h3>date&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
-<h3>${data.currentpositionlong[i].date}</h3>
+<h3>${new Date(parseFloat(data.currentpositionlong[i].time)).toLocaleString()}</h3>
 </div>
 
 <div style="display: flex;">
@@ -314,7 +314,7 @@ let html = `
 
 <div style="display: flex;">
 <h3>date&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
-<h3>${data.profit[i].date}</h3>
+<h3>${new Date(parseFloat(data.profit[i].time)).toLocaleString()}</h3>
 </div>
 
 <div style="display: flex;">
@@ -376,7 +376,7 @@ let html = `
 
 <div style="display: flex;">
 <h3>date&nbsp;&nbsp;=&nbsp;&nbsp;</h3>
-<h3>${data.loss[i].date}</h3>
+<h3>${new Date(parseFloat(data.loss[i].time)).toLocaleString()}</h3>
 </div>
 
 <div style="display: flex;">

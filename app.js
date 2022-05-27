@@ -339,8 +339,7 @@ let time = new Date().getTime();
 //////////////////////////////save in loss and profit ////////////////////////////////////////////
 
 app.get('/show', async (req, res) => {
-    let date = new Date().toLocaleString();
-    let time = new Date().getTime();
+    
     let user = await User.findOne({ userName: 'nadeem' }).exec();
 
       
@@ -353,7 +352,10 @@ app.get('/show', async (req, res) => {
 //console.log(parseFloat( price.prices[ii].time) ,'time', parseFloat(user.currentpositionlong[i].time))
 if(parseFloat( price.prices[ii].time) >= parseFloat(user.currentpositionlong[i].time)){
 if(parseFloat(user.currentpositionlong[i].stoploss) >= parseFloat( price.prices[ii].price)){
+
     console.log('it is')
+    let date = price.prices[ii].date;
+    let time =price.prices[ii].time;
 
     User.findOneAndUpdate({userName:'nadeem'}, {$push: {loss: {scriptName:user.currentpositionlong[i].scriptName,	
         buyprice:user.currentpositionlong[i].buyprice,
@@ -389,7 +391,10 @@ if(parseFloat(user.currentpositionlong[i].stoploss) >= parseFloat( price.prices[
 /////////////cheack for profit/////////
 if(parseFloat( price.prices[ii].time) >= parseFloat(user.currentpositionlong[i].time)){
 if(parseFloat( price.prices[ii].price) >= parseFloat(user.currentpositionlong[i].target)){
-                            
+            
+    let date = price.prices[ii].date;
+    let time =price.prices[ii].time;
+    
     User.findOneAndUpdate({userName:'nadeem'}, {$push: {profit: {scriptName:user.currentpositionlong[i].scriptName,	
       buyprice:user.currentpositionlong[i].buyprice,
       stoploss :user.currentpositionlong[i].stoploss,
