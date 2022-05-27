@@ -1,4 +1,5 @@
 const path = require('path')
+
 const express = require('express')
 const app = express()
 app.use(express.json())
@@ -298,7 +299,7 @@ const User = mongoose.model('user', {
     });
     
 
- //}, 10000)
+ //}, 5000)
 // //////////////////////////////////////////////////////////////////////////////
 
 // //////////////////////////////save in currentpositionlong /////////////////////////////
@@ -344,69 +345,33 @@ let time = new Date().getTime();
 //////////////////////////////save in loss and profit ////////////////////////////////////////////
 
 app.get('/show', async (req, res) => {
-    console.log('hii')
-    let user = await User.findOne({ userName: 'nadeem' }).exec();      
+    
+    let user = await User.findOne({ userName: 'nadeem' }).exec();
+
+      
    
    for(let i = 0; i < user.currentpositionlong.length; i++){
-    console.log('hii2')
+      
+    
     let price = await Shareprice.findOne({ scriptName : user.currentpositionlong[i].scriptName }).exec();
     for(let ii = 0; ii < price.prices.length; ii++){
-        console.log('hii3')
-        console.log('8888888');
-        if(i == user.currentpositionlong.length - 1){
-            
-                let userdata = await User.findOne({ userName: 'nadeem' }).exec();
-                console.log('userdata',userdata)
-                res.send(JSON.stringify(userdata))
-           
-            
-            console.log('999999999999999999');
-            setTimeout(() => {
-                console.log('100000000000000000000');
-Shareprice.find({},function (error, success) {
-    if (error) {
-        console.log(error);
-    } else {
-        console.log('all share',success[4].prices);
 
-        for(let i = 0; i < success.length; i++){
-       let sname=success[i].scriptName;
-          console.log('name',success[i].scriptName)     
-          
-          if(success[i].prices.length > 500){
-          Shareprice.findOneAndDelete({scriptName:success[i].scriptName},
-function (error, success) {
-    if (error) {
-        console.log('error');
-    } else {
-        console.log('deleted sh');
-        const shareprice = new Shareprice({
-          scriptName:sname
-       })
-       shareprice.save()
-    }
-})};
+        console.log('reach');
+        // if(i == user.currentpositionlong.length - 1){
 
-console.log(success.length,'i',i)
-            if(i == success.length-1){
-             console.log('45435gdcfbcvb577rnvnv86888888877678ujhbmnbnb83333333333344444445455545455645656565646456565656555555555555555555555555555565555')
+        //     console.log('reach2');
+        //     setTimeout(() => {
+        //         console.log('reach3');
+
+        //         console.log('done,delete price')
+        //     }, 20000);
             
-             
-          }
-
-      }
-    }
-});
-
-                console.log('done,delete price')
-            }, 60000);
-            
-        }
+        // }
         
 
 
 /////////////cheack for loss/////////
-//console.log(parseFloat( price.prices[ii].time) ,'time', parseFloat(user.currentpositionlong[i].time))
+console.log( price.prices[ii] ,'time', parseFloat(user.currentpositionlong[i].time))
 if(parseFloat( price.prices[ii].time) >= parseFloat(user.currentpositionlong[i].time)){
 if(parseFloat(user.currentpositionlong[i].stoploss) >= parseFloat( price.prices[ii].price)){
 
@@ -485,6 +450,49 @@ if(parseFloat( price.prices[ii].price) >= parseFloat(user.currentpositionlong[i]
 }}
    }
 ///////////////send data///////
+if(i == user.currentpositionlong.length - 1){
+    let userdata = await User.findOne({ userName: 'nadeem' }).exec();
+    console.log('userdata',userdata)
+    res.send(JSON.stringify(userdata))
+
+    Shareprice.find({},function (error, success) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('all share',success[4].prices);
+    
+            for(let iii = 0; iii < success.length; iii++){
+           let sname=success[iii].scriptName;
+              console.log(success[iii].prices.length,'name',success[iii].scriptName)     
+              
+              if(success[iii].prices.length > 50){
+                  console.log('main',success[iii].scriptName)
+    
+              Shareprice.findOneAndDelete({scriptName:success[iii].scriptName},
+    function (error, success) {
+        if (error) {
+            console.log('error');
+        } else {
+            console.log('deleted sh');
+            const shareprice = new Shareprice({
+              scriptName:sname
+           })
+           shareprice.save()
+        }
+    })};
+    
+    console.log(success.length,'i',i)
+                if(iii == success.length-1){
+                 console.log('45435gdcfbcvb577rnvnv86888888877678ujhbmnbnb83333333333344444445455545455645656565646456565656555555555555555555555555555565555')
+                 
+                 
+              }
+    
+          }
+        }
+    });
+    
+}
 
    
 }
@@ -551,7 +559,3 @@ app.get('/getprices', async (req, res) => {
 
 ///////////////////////////////////////////////////////////////////////////////////
 app.listen(port)
-
-
-   
-
