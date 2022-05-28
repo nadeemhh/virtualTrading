@@ -299,7 +299,7 @@ setInterval(() => {
     });
     
 
- }, 10000)
+}, 10000)
 // //////////////////////////////////////////////////////////////////////////////
 
 // //////////////////////////////save in currentpositionlong /////////////////////////////
@@ -342,19 +342,34 @@ let time = new Date().getTime();
 ////////////////////////////////////////////////////true d///////////////////////////////////
 
 
-//////////////////////////////save in loss and profit ////////////////////////////////////////////
+////////////////////////////////////////send data//////////////////////////////////
 
 app.get('/show', async (req, res) => {
-    
+    let userdata = await User.findOne({ userName: 'nadeem' }).exec();
+    console.log('userdata',userdata)
+    res.send(JSON.stringify(userdata))
+
+    })
+
+/////////////////////////////////////save in loss and profit //////////////////////////////////////////////////
+
+
+setInterval(() => {
+    async function myFunction() {
+        
+      console.log('enterrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr')
     let user = await User.findOne({ userName: 'nadeem' }).exec();
 
       
    
    for(let i = 0; i < user.currentpositionlong.length; i++){
-      
+    console.log('enterrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr2')
+
     
     let price = await Shareprice.findOne({ scriptName : user.currentpositionlong[i].scriptName }).exec();
+    console.log(user.currentpositionlong[i].scriptName,'enterrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr08rrrrrrrrrrrrrrrrrrrrrrrrrrr3')
     for(let ii = 0; ii < price.prices.length; ii++){
+        console.log(price.prices.length,'enterrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr0rrrrrrrrrrrrrrrrrrrrrrrrrrr3',ii)
 
         console.log('reach');
         // if(i == user.currentpositionlong.length - 1){
@@ -371,11 +386,9 @@ app.get('/show', async (req, res) => {
 
 
 /////////////cheack for loss/////////
-console.log( price.prices[ii] ,'time', parseFloat(user.currentpositionlong[i].time))
 if(parseFloat( price.prices[ii].time) >= parseFloat(user.currentpositionlong[i].time)){
 if(parseFloat(user.currentpositionlong[i].stoploss) >= parseFloat( price.prices[ii].price)){
 
-    console.log('it is')
     let date = price.prices[ii].date;
     let time =price.prices[ii].time;
 
@@ -450,29 +463,30 @@ if(parseFloat( price.prices[ii].price) >= parseFloat(user.currentpositionlong[i]
 }}
    }
 ///////////////send data///////
+console.log(i,'enterrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr',user.currentpositionlong.length)
+
 if(i == user.currentpositionlong.length - 1){
-    let userdata = await User.findOne({ userName: 'nadeem' }).exec();
-    console.log('userdata',userdata)
-    res.send(JSON.stringify(userdata))
+
+    console.log('enterrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr5')
 
     Shareprice.find({},function (error, success) {
         if (error) {
             console.log(error);
         } else {
-            console.log('all share',success[4].prices);
     
             for(let iii = 0; iii < success.length; iii++){
            let sname=success[iii].scriptName;
-              console.log(success[iii].prices.length,'name',success[iii].scriptName)     
-              
-              if(success[iii].prices.length > 50){
-                  console.log('main',success[iii].scriptName)
-    
+           console.log(success[iii].prices.length,'enterrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr6')
+
+              if(success[iii].prices.length > 20){
+                console.log('enterrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr7')
+
               Shareprice.findOneAndDelete({scriptName:success[iii].scriptName},
     function (error, success) {
         if (error) {
             console.log('error');
         } else {
+            
             console.log('deleted sh');
             const shareprice = new Shareprice({
               scriptName:sname
@@ -481,9 +495,8 @@ if(i == user.currentpositionlong.length - 1){
         }
     })};
     
-    console.log(success.length,'i',i)
                 if(iii == success.length-1){
-                 console.log('45435gdcfbcvb577rnvnv86888888877678ujhbmnbnb83333333333344444445455545455645656565646456565656555555555555555555555555555565555')
+                 
                  
                  
               }
@@ -495,12 +508,10 @@ if(i == user.currentpositionlong.length - 1){
 }
 
    
-}
+}}
+myFunction()
 
-
-    })
-
-///////////////////////////////////////////////////////////////////////////////////////
+}, 300000);
 
 /////////////////////////////get price/////////////////////////////////////////////////
 app.get('/getprices', async (req, res) => {
