@@ -346,9 +346,124 @@ let time = new Date().getTime();
 
 app.get('/show', async (req, res) => {
     
+    console.log('enterrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr')
+    let user = await User.findOne({ userName: 'nadeem' }).exec();
+
+      
+   if(user.currentpositionlong.length > 0){
+       
+   for(let i = 0; i < user.currentpositionlong.length; i++){
+    console.log('enterrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr2')
+
+    
+    let price = await Shareprice.findOne({ scriptName : user.currentpositionlong[i].scriptName }).exec();
+    console.log(user.currentpositionlong[i].scriptName,'enterrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr08rrrrrrrrrrrrrrrrrrrrrrrrrrr3')
+    for(let ii = 0; ii < price.prices.length; ii++){
+        console.log(price.prices.length,'enterrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr0rrrrrrrrrrrrrrrrrrrrrrrrrrr3',ii)
+
+        console.log('reach');
+        // if(i == user.currentpositionlong.length - 1){
+
+        //     console.log('reach2');
+        //     setTimeout(() => {
+        //         console.log('reach3');
+
+        //         console.log('done,delete price')
+        //     }, 20000);
+            
+        // }
+        
+
+
+/////////////cheack for loss/////////
+if(parseFloat( price.prices[ii].time) >= parseFloat(user.currentpositionlong[i].time)){
+if(parseFloat(user.currentpositionlong[i].stoploss) >= parseFloat( price.prices[ii].price)){
+
+    let date = price.prices[ii].date;
+    let time =price.prices[ii].time;
+
+    User.findOneAndUpdate({userName:'nadeem'}, {$push: {loss: {scriptName:user.currentpositionlong[i].scriptName,	
+        buyprice:user.currentpositionlong[i].buyprice,
+        stoploss :user.currentpositionlong[i].stoploss,
+        quantity:user.currentpositionlong[i].quantity,
+        pl:(price.prices[ii].price - user.currentpositionlong[i].buyprice)*user.currentpositionlong[i].quantity,
+        date:date,
+        time:time,
+        sellprice:price.prices[ii].price,
+        target:user.currentpositionlong[i].target}
+    }},
+        function (error, success) {
+              if (error) {
+                  console.log(error);
+              } else {
+                  console.log('added into loss');
+                  
+                  User.findOneAndUpdate({userName:'nadeem'}, {$pull: {currentpositionlong:user.currentpositionlong[i]}},
+                  function (error, success) {
+                        if (error) {
+                            console.log(error);
+                        } else {
+                            console.log('pulled from currentpositionlong');
+                           
+                        }
+                    });
+
+                    ///
+              }
+          });
+
+          break;
+
+}}
+/////////////cheack for profit/////////
+if(parseFloat( price.prices[ii].time) >= parseFloat(user.currentpositionlong[i].time)){
+if(parseFloat( price.prices[ii].price) >= parseFloat(user.currentpositionlong[i].target)){
+            
+    let date = price.prices[ii].date;
+    let time =price.prices[ii].time;
+
+    User.findOneAndUpdate({userName:'nadeem'}, {$push: {profit: {scriptName:user.currentpositionlong[i].scriptName,	
+      buyprice:user.currentpositionlong[i].buyprice,
+      stoploss :user.currentpositionlong[i].stoploss,
+      quantity:user.currentpositionlong[i].quantity,
+      pl:(price.prices[ii].price - user.currentpositionlong[i].buyprice)*user.currentpositionlong[i].quantity,
+      date:date,
+      time:time,
+      sellprice:price.prices[ii].price,
+      target:user.currentpositionlong[i].target}
+  }},
+      function (error, success) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('added into profit');
+                User.findOneAndUpdate({userName:'nadeem'}, {$pull: {currentpositionlong:user.currentpositionlong[i]}},
+                function (error, success) {
+                      if (error) {
+                          console.log(error);
+                      } else {
+                          console.log('pulled from currentpositionlong');
+                      }
+                  });
+            }
+            //i
+        });
+
+        break;
+}}
+   }
+///////////////send data///////
+console.log(i,'enterrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr',user.currentpositionlong.length)
+
+if(i == user.currentpositionlong.length - 1){
     let userdata = await User.findOne({ userName: 'nadeem' }).exec();
     console.log('userdata',userdata)
     res.send(JSON.stringify(userdata))
+}
+
+   
+}
+    }
 
     })
 
@@ -363,6 +478,7 @@ setInterval(() => {
 
       
    if(user.currentpositionlong.length > 0){
+       
    for(let i = 0; i < user.currentpositionlong.length; i++){
     console.log('enterrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr2')
 
@@ -510,7 +626,8 @@ if(i == user.currentpositionlong.length - 1){
 
    
 }
-    }}
+    }
+}
 myFunction()
 
 }, 900000);
