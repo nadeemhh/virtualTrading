@@ -627,7 +627,7 @@ if(i == user.currentpositionlong.length - 1){
 }
 myFunction()
 
-}, 60000);
+}, 900000);
 
 /////////////////////////////get price/////////////////////////////////////////////////
 app.get('/getprices', async (req, res) => {

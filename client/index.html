@@ -144,7 +144,7 @@ if(a1.value == '' || c1.value=='' || d1.value == '' || f1.value == ''){
 }
 	
 console.log('coreect')
-fetch("http://localhost:3000/currentlong", {
+fetch("https://virtualtrading66.herokuapp.com/currentlong", {
 	// Adding method type
 	method: "POST",
 	
@@ -176,7 +176,7 @@ fetch("http://localhost:3000/currentlong", {
 
 //////////////////////////////////////////fetch 
 
-fetch("http://localhost:3000/show")
+fetch("https://virtualtrading66.herokuapp.com/show")
 
 .then(response => {return response.json()})
 
@@ -228,7 +228,7 @@ if(data.loss[i].stoploss == data.loss[ii].stoploss && data.loss[i].pl == data.lo
 for(let i = 0; i < data.currentpositionlong.length; i++){
   total_obj.total_currentpositionlong+=parseInt(data.currentpositionlong[i].pl)
 	let onee =0;
-	fetch(`http://localhost:3000/getprices?scriptName=${data.currentpositionlong[i].scriptName}`)
+	fetch(`https://virtualtrading66.herokuapp.com/getprices?scriptName=${data.currentpositionlong[i].scriptName}`)
 
 .then(response => {return response.json()})
 
@@ -560,7 +560,7 @@ let cl = document.querySelector('.cl');
 let cp = document.querySelector('.cp');
 
 cc.addEventListener('click',function () {
-  fetch('http://localhost:3000/removecurrent')
+  fetch('https://virtualtrading66.herokuapp.com/removecurrent')
 
 .then(response => {return response.json()})
 .then(data => {console.log(data)
@@ -570,7 +570,7 @@ cc.addEventListener('click',function () {
 
 
 cp.addEventListener('click',function () {
-  fetch('http://localhost:3000/removeprofit')
+  fetch('https://virtualtrading66.herokuapp.com/removeprofit')
 
 .then(response => {return response.json()})
 .then(data => {console.log(data)
@@ -579,7 +579,7 @@ cp.addEventListener('click',function () {
 })
 
 cl.addEventListener('click',function () {
-  fetch('http://localhost:3000/removeloss')
+  fetch('https://virtualtrading66.herokuapp.com/removeloss')
 
 .then(response => {return response.json()})
 .then(data => {console.log(data)
