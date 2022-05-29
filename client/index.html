@@ -68,9 +68,15 @@ input[type=submit] {
   color: #ffffff; 
 }
 
+.tc{background: blueviolet;padding: 5px;color: #fff;text-align: center;}
+.tp{background: green;padding: 5px;color: #fff;text-align: center;}
+.tl{background: red;padding: 5px;color: #fff;text-align: center;}
 
 		.green{background-color: green; padding: 5px;}
 		.red{background-color: red;padding: 5px;}
+
+    .summary{display: flex;justify-content: space-evenly;flex-wrap: wrap;gap: 5px;background-color: rgb(31, 106, 109);margin-top: 10px;}
+
 	</style>
 </head>
 <body>
@@ -83,27 +89,43 @@ input[type=submit] {
 <form  autocomplete="off">
 
 <div class="autocomplete" style="width:300px;">
-    <input id="myInput" class="a1"  placeholder="scriptName"  type="text" name="myCountry">
-<input class="c1" placeholder="stoploss" type="text">
-<input class="d1" placeholder="target" type="text">
-<input class="f1" placeholder="quantity" type="text">
+    <input style="margin-bottom:5px ;" id="myInput" class="a1"  placeholder="scriptName"  type="text" name="myCountry">
+<input style="margin-bottom:5px ;" class="c1" placeholder="stoploss" type="text">
+<input style="margin-bottom:5px ;" class="d1" placeholder="target" type="text">
+<input style="margin-bottom:5px ;" class="f1" placeholder="quantity" type="text">
   </div>
 </form>
 <input class="e1" type="submit">
 </div>
 
-<h2 style="margin-top: 10px;text-align: center; background-color: rgb(139, 139, 223);">current position long</h2>
-<div class="currentpositionlong" style="margin-top: 10px;height: 400px;overflow: scroll;">
-
+<div class="summary">
+  <div>
+    <h3 style="color: white;">Total Current p&l</h3>
+    <h3 class="tc">0</h3></div>
+<div><h3 style="color: white;">Total Profit p&l</h3><h3 class="tp">0</h3></div>
+<div><h3 style="color: white;">Total Loss p&l</h3><h3 class="tl">0</h3></div>
 </div>
-<h2 style="margin-top: 10px;text-align: center; background-color: rgb(139, 139, 223);">profit</h2>
-<div class="profit" style="margin-top: 10px;height: 400px;overflow: scroll;">
-	
-	</div>
-	<h2 style="margin-top: 10px;text-align: center; background-color: rgb(139, 139, 223);">loss</h2>
-	<div class="loss" style="margin-top: 10px;height: 400px;overflow: scroll;">
 
-		</div>
+<div style="margin-top: 10px;text-align: center; background-color: #3229a6;display: flex;justify-content: flex-end;justify-content: space-around;align-items: center;">
+<h2>current position long</h2>
+<button style="font-size: 20px;" class="cc">clear</button>
+</div>
+
+<div class="currentpositionlong" style="margin-top: 10px;height: 400px;overflow: scroll;"></div>
+
+<div style="margin-top: 10px;text-align: center; background-color: #3229a6;display: flex;justify-content: flex-end;justify-content: space-around;align-items: center;">
+  <h2>Profit</h2>
+  <button style="font-size: 20px;" class="cp">clear</button>
+  </div>
+
+<div class="profit" style="margin-top: 10px;height: 400px;overflow: scroll;"></div>
+
+<div style="margin-top: 10px;text-align: center; background-color: #3229a6;display: flex;justify-content: flex-end;justify-content: space-around;align-items: center;">
+  <h2>Loss</h2>
+  <button style="font-size: 20px;" class="cl">clear</button>
+  </div>
+
+	<div class="loss" style="margin-top: 10px;height: 400px;overflow: scroll;"></div>
 
 	<script>
 
@@ -117,9 +139,11 @@ let f1 = document.querySelector('.f1');
 e1.addEventListener('click',function () {
 	console.log(a1.value)
 
-
+if(a1.value == '' || c1.value=='' || d1.value == '' || f1.value == ''){
+  throw new Error("can't be empty")
+}
 	
-
+console.log('coreect')
 fetch("https://virtualtrading66.herokuapp.com/currentlong", {
 	// Adding method type
 	method: "POST",
@@ -157,6 +181,7 @@ fetch("https://virtualtrading66.herokuapp.com/show")
 .then(response => {return response.json()})
 
 .then(data => {
+
 	
 let profit = [];
 	for(let i = 0; i < data.profit.length; i++){
@@ -194,8 +219,14 @@ if(data.loss[i].stoploss == data.loss[ii].stoploss && data.loss[i].pl == data.lo
 	console.log(data.loss)
 	console.log(data.profit)
 	console.log(data.currentpositionlong)
+
+  let total_obj={total_profit :0,
+    total_loss :0,
+ total_currentpositionlong :0}
+ 
 //////////////set pl currentpositionlong
 for(let i = 0; i < data.currentpositionlong.length; i++){
+  total_obj.total_currentpositionlong+=parseInt(data.currentpositionlong[i].pl)
 	let onee =0;
 	fetch(`https://virtualtrading66.herokuapp.com/getprices?scriptName=${data.currentpositionlong[i].scriptName}`)
 
@@ -277,6 +308,9 @@ else{
 	/////////////////////////////profit
 
 	for(let i = 0; i < data.profit.length; i++){
+
+    total_obj.total_profit+=parseInt(data.profit[i].pl)
+
 		let rand2 =Math.floor(Math.random() * 100000)
 ;
 const h2 = document.querySelector(".profit");
@@ -338,6 +372,8 @@ else{
 	/////////////////////////////loss
 
 	for(let i = 0; i < data.loss.length; i++){
+    total_obj.total_loss+=parseInt(data.loss[i].pl)
+
 		let rand3 =Math.floor(Math.random() * 100000)
 ;
 const h2 = document.querySelector(".loss");
@@ -397,6 +433,18 @@ else{
 }
 
 }
+
+console.log('total',total_obj.total_profit,'total',total_obj.total_loss,'total',total_obj.total_currentpositionlong)
+
+let tc = document.querySelector('.tc').textContent=total_obj.total_currentpositionlong;
+let tp = document.querySelector('.tl').textContent=total_obj.total_loss;
+let tl = document.querySelector('.tp').textContent=total_obj.total_profit;
+
+if(total_obj.total_currentpositionlong > 0){
+  console.log('gr')
+  document.querySelector('.tc').style.backgroundColor='green';}
+if(total_obj.total_currentpositionlong < 0){document.querySelector('.tc').style.backgroundColor='red';}
+if(total_obj.total_currentpositionlong == 0){document.querySelector('.tc').style.backgroundColor='gray';}
 });
 
 
@@ -506,6 +554,38 @@ console.log(countries)
 /*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
 autocomplete(document.getElementById("myInput"), countries);
 
+
+let cc = document.querySelector('.cc');
+let cl = document.querySelector('.cl');
+let cp = document.querySelector('.cp');
+
+cc.addEventListener('click',function () {
+  fetch('https://virtualtrading66.herokuapp.com/removecurrent')
+
+.then(response => {return response.json()})
+.then(data => {console.log(data)
+  location.reload();})
+.catch(err => {console.log(err)})
+})
+
+
+cp.addEventListener('click',function () {
+  fetch('https://virtualtrading66.herokuapp.com/removeprofit')
+
+.then(response => {return response.json()})
+.then(data => {console.log(data)
+  location.reload();})
+.catch(err => {console.log(err)})
+})
+
+cl.addEventListener('click',function () {
+  fetch('https://virtualtrading66.herokuapp.com/removeloss')
+
+.then(response => {return response.json()})
+.then(data => {console.log(data)
+  location.reload();})
+.catch(err => {console.log(err)})
+})
 
 
 	</script>

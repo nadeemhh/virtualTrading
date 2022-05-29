@@ -345,6 +345,7 @@ let time = new Date().getTime();
 ////////////////////////////////////////send data//////////////////////////////////
 
 app.get('/show', async (req, res) => {
+    
     let userdata = await User.findOne({ userName: 'nadeem' }).exec();
     console.log('userdata',userdata)
     res.send(JSON.stringify(userdata))
@@ -361,7 +362,7 @@ setInterval(() => {
     let user = await User.findOne({ userName: 'nadeem' }).exec();
 
       
-   
+   if(user.currentpositionlong.length > 0){
    for(let i = 0; i < user.currentpositionlong.length; i++){
     console.log('enterrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr2')
 
@@ -508,10 +509,11 @@ if(i == user.currentpositionlong.length - 1){
 }
 
    
-}}
+}
+    }}
 myFunction()
 
-}, 300000);
+}, 900000);
 
 /////////////////////////////get price/////////////////////////////////////////////////
 app.get('/getprices', async (req, res) => {
@@ -529,44 +531,83 @@ app.get('/getprices', async (req, res) => {
     })
 
 
-        
-        // Shareprice.find({},function (error, success) {
-        //       if (error) {
-        //           console.log(error);
-        //       } else {
-        //           console.log('all share',success[4].prices);
+        /////remove data of loss and profit and current
 
-        //           for(let i = 0; i < success.length; i++){
-        //          let sname=success[i].scriptName;
-        //             console.log('name',success[i].scriptName)     
-                    
-        //             if(success[i].prices.length > 57){
-        //             Shareprice.findOneAndDelete({scriptName:success[i].scriptName},
-        // function (error, success) {
-        //       if (error) {
-        //           console.log('error');
-        //       } else {
-        //           console.log('deleted sh');
-        //           const shareprice = new Shareprice({
-        //             scriptName:sname
-        //          })
-        //          shareprice.save()
-        //       }
-        //   })};
+       app.get('/removecurrent', async (req, res) => {
 
-        //   console.log(success.length,'i',i)
-        //               if(i == success.length-1){
-        //                console.log('45435gdcfbcvb577rnvnv86888888877678ujhbmnbnb83333333333344444445455545455645656565646456565656555555555555555555555555555565555')
-        //                res.send({'deleted':'done'})
-                       
-        //             }
+        let user = await User.findOne({ userName: 'nadeem' }).exec();
+    
+        if(user.currentpositionlong.length > 0){
 
-        //         }
-        //       }
-        //   });
+        for(let i = 0; i < user.currentpositionlong.length; i++){
+            
+    User.findOneAndUpdate({userName:'nadeem'}, {$pull: {currentpositionlong: {scriptName:user.currentpositionlong[i].scriptName}}},
+            function (error, success) {
+                  if (error) {
+                      console.log(error);
+                  } else {
+                      console.log('removed',success);
+                  }
+              });
+
+              if(i == user.currentpositionlong.length  -1 ){
+                res.send({'rem':'removed'})
+              }
+        }
+    }
+       })
         
-       
+
+       app.get('/removeloss', async (req, res) => {
+
+        let user = await User.findOne({ userName: 'nadeem' }).exec();
+    
+        if(user.loss.length > 0){
+
+        for(let i = 0; i < user.loss.length; i++){
+            
+    User.findOneAndUpdate({userName:'nadeem'}, {$pull: {loss: {scriptName:user.loss[i].scriptName}}},
+            function (error, success) {
+                  if (error) {
+                      console.log(error);
+                  } else {
+                      console.log('removed',success);
+                  }
+              });
+
+              if(i == user.loss.length - 1 ){
+                  res.send({'rem':'removed'})
+              }
+        }
+    }
+       })
         
+
+       app.get('/removeprofit', async (req, res) => {
+
+        let user = await User.findOne({ userName: 'nadeem' }).exec();
+    
+        if(user.profit.length > 0){
+
+        for(let i = 0; i < user.profit.length; i++){
+            
+    User.findOneAndUpdate({userName:'nadeem'}, {$pull: {profit: {scriptName:user.profit[i].scriptName}}},
+            function (error, success) {
+                  if (error) {
+                      console.log(error);
+                  } else {
+                      console.log('removed',success);
+                  }
+              });
+
+              if(i == user.profit.length  -1 ){
+                res.send({'rem':'removed'})
+              }
+        }
+    }
+       })
+        
+
 
 ///////////////////////////////////////////////////////////////////////////////////
 app.listen(port)
