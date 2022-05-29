@@ -346,6 +346,11 @@ let time = new Date().getTime();
 
 app.get('/show', async (req, res) => {
     
+    let userdata = await User.findOne({ userName: 'nadeem' }).exec();
+    console.log('userdata',userdata)
+    res.send(JSON.stringify(userdata))
+
+      
     console.log('enterrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr')
     let user = await User.findOne({ userName: 'nadeem' }).exec();
 
@@ -452,14 +457,6 @@ if(parseFloat( price.prices[ii].price) >= parseFloat(user.currentpositionlong[i]
         break;
 }}
    }
-///////////////send data///////
-console.log(i,'enterrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr',user.currentpositionlong.length)
-
-if(i == user.currentpositionlong.length - 1){
-    let userdata = await User.findOne({ userName: 'nadeem' }).exec();
-    console.log('userdata',userdata)
-    res.send(JSON.stringify(userdata))
-}
 
    
 }
@@ -595,7 +592,7 @@ if(i == user.currentpositionlong.length - 1){
            let sname=success[iii].scriptName;
            console.log(success[iii].prices.length,'enterrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr6')
 
-              if(success[iii].prices.length > 20){
+              if(success[iii].prices.length > 10){
                 console.log('enterrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr7')
 
               Shareprice.findOneAndDelete({scriptName:success[iii].scriptName},
@@ -630,7 +627,7 @@ if(i == user.currentpositionlong.length - 1){
 }
 myFunction()
 
-}, 900000);
+}, 60000);
 
 /////////////////////////////get price/////////////////////////////////////////////////
 app.get('/getprices', async (req, res) => {
