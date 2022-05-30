@@ -107,7 +107,7 @@ input[type=submit] {
 </div>
 
 <div style="margin-top: 10px;text-align: center; background-color: #3229a6;display: flex;justify-content: flex-end;justify-content: space-around;align-items: center;">
-<h2 style="color: white;">current position long</h2>
+<h2 style="color: white;">Current Position Long</h2>
 <button style="font-size: 20px;" class="cc">clear</button>
 </div>
 
@@ -128,7 +128,9 @@ input[type=submit] {
 	<div class="loss" style="margin-top: 10px;height: 400px;overflow: scroll;"></div>
 
 	<script>
-
+  let total_obj={total_profit :0,
+    total_loss :0,
+ total_currentpositionlong :0}
 	console.log('hii')
 
 let a1 = document.querySelector('.a1');
@@ -220,13 +222,12 @@ if(data.loss[i].stoploss == data.loss[ii].stoploss && data.loss[i].pl == data.lo
 	console.log(data.profit)
 	console.log(data.currentpositionlong)
 
-  let total_obj={total_profit :0,
-    total_loss :0,
- total_currentpositionlong :0}
- 
+
+
 //////////////set pl currentpositionlong
 for(let i = 0; i < data.currentpositionlong.length; i++){
-  total_obj.total_currentpositionlong+=parseInt(data.currentpositionlong[i].pl)
+ 
+ 
 	let onee =0;
 	fetch(`https://virtualtrading66.herokuapp.com/getprices?scriptName=${data.currentpositionlong[i].scriptName}`)
 
@@ -240,7 +241,14 @@ let rand =Math.floor(Math.random() * 100000)
 	console.log(pdata,data.currentpositionlong[i].pl)
 	data.currentpositionlong[i].pl=(pdata-data.currentpositionlong[i].buyprice)*data.currentpositionlong[i].quantity;
 	console.log(data.currentpositionlong[i])
-	
+  total_obj.total_currentpositionlong+=data.currentpositionlong[i].pl
+  let tc = document.querySelector('.tc').textContent=parseInt(total_obj.total_currentpositionlong);
+  console.log('see', total_obj.total_currentpositionlong)
+  if(total_obj.total_currentpositionlong > 0){
+  console.log('gr')
+  document.querySelector('.tc').style.backgroundColor='green';}
+if(total_obj.total_currentpositionlong < 0){document.querySelector('.tc').style.backgroundColor='red';}
+if(total_obj.total_currentpositionlong == 0){document.querySelector('.tc').style.backgroundColor='gray';}
 	/////////////////////////////currentpositionlong
 
 const h2 = document.querySelector(".currentpositionlong");
@@ -436,15 +444,11 @@ else{
 
 console.log('total',total_obj.total_profit,'total',total_obj.total_loss,'total',total_obj.total_currentpositionlong)
 
-let tc = document.querySelector('.tc').textContent=total_obj.total_currentpositionlong;
+
 let tp = document.querySelector('.tl').textContent=total_obj.total_loss;
 let tl = document.querySelector('.tp').textContent=total_obj.total_profit;
 
-if(total_obj.total_currentpositionlong > 0){
-  console.log('gr')
-  document.querySelector('.tc').style.backgroundColor='green';}
-if(total_obj.total_currentpositionlong < 0){document.querySelector('.tc').style.backgroundColor='red';}
-if(total_obj.total_currentpositionlong == 0){document.querySelector('.tc').style.backgroundColor='gray';}
+
 });
 
 

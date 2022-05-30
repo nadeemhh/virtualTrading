@@ -196,7 +196,10 @@ const User = mongoose.model('user', {
   let m_date = split_date[0];
   console.log(m_date)
 
-/////////////////////////////////save price////////////////////////////////////////////////////
+  
+
+ 
+// /////////////////////////////////save price////////////////////////////////////////////////////
 
 setInterval(() => {
 
@@ -220,8 +223,21 @@ setInterval(() => {
 
         let nam =dom.window.document.querySelectorAll('.u-clickable')[oo].children[2].textContent.replace('\n','').replace(' ','').replace(' ','').replace(' ','');
         if(nam[0]=='O' && nam[1]=='i'&& nam[2]=='l'){
+           
             console.log('nammmmmmmmmmmmmmmmmmmmmmmmmmm',nam)
             nam='OilandNaturalGas';
+
+            async function name1(){
+                let price = await Shareprice.findOne({ scriptName : nam }).exec();
+               if(price == null){
+                   console.log(price,'seeeeeeeeeeeeeeeeeeeeeeeee1111eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
+                const shareprice = new Shareprice({
+                    scriptName:nam
+                 })
+                 shareprice.save()
+               }
+            }
+            name1()
             Shareprice.findOneAndUpdate({scriptName:nam}, {$push: {prices: [{price:dom.window.document.querySelectorAll('.u-clickable')[oo].children[3].textContent.replace('\n','').replace(' ','').replace(' ','').replace(',',''),
             date:date,time:time,script:dom.window.document.querySelectorAll('.u-clickable')[oo].children[2].textContent.replace('\n','').replace(' ','').replace(' ','').replace(' ','')}]}},
                 function (error, success) {
@@ -234,9 +250,21 @@ setInterval(() => {
     
         }
 
-        if(nam[5]=='P' && nam[6]=='o'&& nam[7]=='r'){
+        else if(nam[5]=='P' && nam[6]=='o'&& nam[7]=='r'){
+            
             console.log('nammmmmmmmmmmmmmmmmmmmmmmmmmm',nam)
             nam='AdaniPortsandSEZ';
+            async function name2(){
+                let price = await Shareprice.findOne({ scriptName : nam }).exec();
+               if(price == null){
+                   console.log(price,'seeeeeeeeeeeeeeeeeeeeeeeeeeee2222eeeeeeeeeeeeeeeeeeeeeeeeeeeee')
+                const shareprice = new Shareprice({
+                    scriptName:nam
+                 })
+                 shareprice.save()
+               }
+            }
+            name2()
             Shareprice.findOneAndUpdate({scriptName:nam}, {$push: {prices: [{price:dom.window.document.querySelectorAll('.u-clickable')[oo].children[3].textContent.replace('\n','').replace(' ','').replace(' ','').replace(',',''),
             date:date,time:time,script:dom.window.document.querySelectorAll('.u-clickable')[oo].children[2].textContent.replace('\n','').replace(' ','').replace(' ','').replace(' ','')}]}},
                 function (error, success) {
@@ -249,9 +277,20 @@ setInterval(() => {
     
         }
 
-        if(nam[0]=='L' && nam[1]=='a'&& nam[2]=='r'){
+        else if(nam[0]=='L' && nam[1]=='a'&& nam[2]=='r'){
             console.log('nammmmmmmmmmmmmmmmmmmmmmmmmmm',nam)
             nam='LarsenandToubro';
+            async function name3(){
+                let price = await Shareprice.findOne({ scriptName : nam }).exec();
+               if(price == null){
+                   console.log(price,'seeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee3333eeeeeeeeeeeeeeeeeeeeee')
+                const shareprice = new Shareprice({
+                    scriptName:nam
+                 })
+                 shareprice.save()
+               }
+            }
+            name3()
             Shareprice.findOneAndUpdate({scriptName:nam}, {$push: {prices: [{price:dom.window.document.querySelectorAll('.u-clickable')[oo].children[3].textContent.replace('\n','').replace(' ','').replace(' ','').replace(',',''),
             date:date,time:time,script:dom.window.document.querySelectorAll('.u-clickable')[oo].children[2].textContent.replace('\n','').replace(' ','').replace(' ','').replace(' ','')}]}},
                 function (error, success) {
@@ -264,9 +303,20 @@ setInterval(() => {
     
         }
 
-        if(nam[2]=='h' && nam[3]=='i'&& nam[4]=='n'){
+        else if(nam[2]=='h' && nam[3]=='i'&& nam[4]=='n'){
             console.log('nammmmmmmmmmmmmmmmmmmmmmmmmmm',nam)
             nam='MahindraandMahindra';
+            async function name4(){
+                let price = await Shareprice.findOne({ scriptName : nam }).exec();
+               if(price == null){
+                   console.log(price,'seeeeeeeeeeeeeeeee4444eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
+                const shareprice = new Shareprice({
+                    scriptName:nam
+                 })
+                 shareprice.save()
+               }
+            }
+            name4()
             Shareprice.findOneAndUpdate({scriptName:nam}, {$push: {prices: [{price:dom.window.document.querySelectorAll('.u-clickable')[oo].children[3].textContent.replace('\n','').replace(' ','').replace(' ','').replace(',',''),
             date:date,time:time,script:dom.window.document.querySelectorAll('.u-clickable')[oo].children[2].textContent.replace('\n','').replace(' ','').replace(' ','').replace(' ','')}]}},
                 function (error, success) {
@@ -279,6 +329,17 @@ setInterval(() => {
     
         }
 
+       else{ async function name5(){
+            let price = await Shareprice.findOne({ scriptName : nam }).exec();
+           if(price == null){
+               console.log(price,'seeeeeeeeeeeeeeeeee55555eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
+            const shareprice = new Shareprice({
+                scriptName:nam
+             })
+             shareprice.save()
+           }
+        }
+        name5()
         Shareprice.findOneAndUpdate({scriptName:dom.window.document.querySelectorAll('.u-clickable')[oo].children[2].textContent.replace('\n','').replace(' ','').replace(' ','').replace(' ','')}, {$push: {prices: [{price:dom.window.document.querySelectorAll('.u-clickable')[oo].children[3].textContent.replace('\n','').replace(' ','').replace(' ','').replace(',',''),
         date:date,time:time,script:dom.window.document.querySelectorAll('.u-clickable')[oo].children[2].textContent.replace('\n','').replace(' ','').replace(' ','').replace(' ','')}]}},
             function (error, success) {
@@ -288,6 +349,7 @@ setInterval(() => {
                       console.log('price saved');
                   }
               });
+            }
 
         }
     
@@ -362,21 +424,13 @@ app.get('/show', async (req, res) => {
 
     
     let price = await Shareprice.findOne({ scriptName : user.currentpositionlong[i].scriptName }).exec();
+    
     console.log(user.currentpositionlong[i].scriptName,'enterrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr08rrrrrrrrrrrrrrrrrrrrrrrrrrr3')
     for(let ii = 0; ii < price.prices.length; ii++){
         console.log(price.prices.length,'enterrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr0rrrrrrrrrrrrrrrrrrrrrrrrrrr3',ii)
 
         console.log('reach');
-        // if(i == user.currentpositionlong.length - 1){
-
-        //     console.log('reach2');
-        //     setTimeout(() => {
-        //         console.log('reach3');
-
-        //         console.log('done,delete price')
-        //     }, 20000);
-            
-        // }
+        
         
 
 
@@ -486,18 +540,7 @@ setInterval(() => {
         console.log(price.prices.length,'enterrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr0rrrrrrrrrrrrrrrrrrrrrrrrrrr3',ii)
 
         console.log('reach');
-        // if(i == user.currentpositionlong.length - 1){
-
-        //     console.log('reach2');
-        //     setTimeout(() => {
-        //         console.log('reach3');
-
-        //         console.log('done,delete price')
-        //     }, 20000);
-            
-        // }
         
-
 
 /////////////cheack for loss/////////
 if(parseFloat( price.prices[ii].time) >= parseFloat(user.currentpositionlong[i].time)){
@@ -606,6 +649,7 @@ if(i == user.currentpositionlong.length - 1){
               scriptName:sname
            })
            shareprice.save()
+           
         }
     })};
     
@@ -722,6 +766,6 @@ app.get('/getprices', async (req, res) => {
        })
         
 
-
+       
 ///////////////////////////////////////////////////////////////////////////////////
 app.listen(port)
